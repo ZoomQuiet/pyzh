@@ -6777,6 +6777,9 @@ PinYinDict = {
 '件':('jian',), 
 '诸':('zhu',),
 '苼':('sheng',),
+'芿':('reng',),
+'苅':('yi',),
+'苐':('di',),
 }
 
 PinYinDict.update({
