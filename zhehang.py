@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# 作者: 潘俊勇, panjy at zopen dot cn
 import re
 rx=re.compile(u"([\u2e80-\uffff])", re.UNICODE)
 
