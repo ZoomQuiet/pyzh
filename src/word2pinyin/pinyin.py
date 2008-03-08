@@ -6791,7 +6791,7 @@ PinYinDict.update({
 '》':('',),
 })
 
-PinYinDict = dict([( ord(k.decode('utf-8')), v[0]) for k, v in PinYinDict.items()])
+PinYinDict = dict([( ord(k.decode('utf-8')), v[0].decode('utf-8')) for k, v in PinYinDict.items()])
 
 def hanzi2pinyin(hanzi):
     """ hanzi should be unicode string"""

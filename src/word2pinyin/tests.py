@@ -16,8 +16,7 @@ class PinYinTestCase(unittest.TestCase):
     def testChinese(self):
         assert hanzi2pinyin(u'公共的模') == u'gonggongdemo'
 
-    def testEnglish(self):
-        assert hanzi2pinyin(u'this is a english') == u'this is a english'
+    def testEnglish(self): assert hanzi2pinyin(u'this is a english') == u'this is a english'
 
     def testMixedText(self):
         assert hanzi2pinyin(u'公共的  模 asdf!') == u'gonggongde  mo asdf!'
