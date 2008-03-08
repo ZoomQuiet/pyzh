@@ -6804,9 +6804,3 @@ def hanzi2pinyin(hanzi):
             pinyin += char
     return pinyin
 
-def test():
-    hanzi = "我们，都是中国人，Chinese!".decode('utf-8')
-    print hanzi2pinyin(hanzi)
-
-if __name__ == '__main__':
-    test()
