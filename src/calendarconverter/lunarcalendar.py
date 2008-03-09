@@ -3,7 +3,27 @@
 """
 from datetime import date
 
+def getSumIndexInfo(int_list, sum):
+    """ int_list是一个整数的列表，sum是一个累加结果，找到列表以次累加，
+    最接近但不超过sum的那个索引，以及多余的量。
+
+    返回：(index, offset)
+    
+    >>> getSumIndexInfo([8,2,19,3], 20)
+    (2, 10)
+    """
+    _sum = 0 
+    _index = 0
+    for i in int_list:
+        if _sum + i> sum:
+            return _index, sum - _sum 
+
+        _sum += i
+        _index += 1
+
 class LunarCalendar:
+    """
+    """
 
     daysInSolarMonth= [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     lunarMonthDays  = [29,30] # a short (long) lunar month has 29 (30) days */
@@ -71,8 +91,12 @@ class LunarCalendar:
                                    for year in self.lunar_years]
 
     def getLunarYearInfo(self, year):
+        """
+        >>> cal = LunarCalendar()
+        >>> cal.getLunarYearInfo( 2003 )
+        ([30, 30, 29, 30, 30, 29, 30, 29, 29, 30, 29, 30], 0)
+        """
         iYear = year - self.lunar_years[0]
-        print iYear
         code = self.yearCode[iYear]
         leapMonth = code&0xf #leapMonth==0 means no lunar leap month
         monthDays = [0] * 12
@@ -145,6 +169,7 @@ class LunarCalendar:
 
   #3.详细日期信息查询
 
+
     def getLunarOfThisDay(self,year,month,day):
 	"""输入阳历年月日,返回本日阴历
 
@@ -169,6 +194,6 @@ class LunarCalendar:
 	"""	
 
 if __name__ == "__main__":
-    import sys
-    cal = LunarCalendar()
-    print cal.getLunarYearInfo( int(sys.argv[1]) )
+    import doctest
+    doctest.testmod()
+
