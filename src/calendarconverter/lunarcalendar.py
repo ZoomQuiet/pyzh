@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 """ CalendarConversion   公历 <-> 阴历.
 """
+from datetime import date
 
 class LunarCalendar:
 
@@ -23,8 +24,10 @@ class LunarCalendar:
     weekdayGB       = ["一", "二", "三", "四", "五", "六", "日"]
     numGB           = ['○', "一", "二", "三", "四", "五", "六", "七", "八", "九",
 			   "十"]
-    lunarHoliday    = {'0_0':'春节', '4_4':'端午', '7_14':'中秋', '8_8':'重阳',
-			   '0_14':'元宵'}
+    lunarHoliday    = {'春节':(1, 1), 
+                       '端午':(5, 5), 
+                       '中秋':(8, 15), '重阳':(9,9),
+			   '元宵':(1, 15)}
 
     yearCode = [
                                         0x04bd8,        # 1900
@@ -58,14 +61,18 @@ class LunarCalendar:
     0x0aa50, 0x1b255, 0x06d20, 0x0ada0                  # 2049
     ]
 
+    lunar_years = range(1900, 1900 + len(yearCode) -1)
     solar1st = (1900, 1, 30)   # January 31, 1900 
     lunar1st = (1900, 1, 1, 6, 0) # First day, First month, 1900, 庚/子年
 
     def __init__(self):
-        pass
+        # 阴历各年的总天数
+        self.lunar_year_days = [sum( self.getLunarYearInfo(year)[0] ) \
+                                   for year in self.lunar_years]
 
     def getLunarYearInfo(self, year):
-        iYear = year - 1900
+        iYear = year - self.lunar_years[0]
+        print iYear
         code = self.yearCode[iYear]
         leapMonth = code&0xf #leapMonth==0 means no lunar leap month
         monthDays = [0] * 12
@@ -80,11 +87,12 @@ class LunarCalendar:
         return monthDays, leapMonth
 
     # 1.有关年分信息查询
-
     def getLeapMonthOfThisYear(self, year):
         """ 输入年份,返回本年度阴历的闰月
 
         如果没有,就返回空,否则返回今年的闰月"""
+        monthDays, leapMonth = self.getLunarYearInfo()
+        return leapMonth
 
     def getAllSolarTermOfThisYear(self, year):
         """输入年份,返回本年度所有节气信息(dic)
@@ -105,7 +113,7 @@ class LunarCalendar:
     def getAnimalSignOfThisYear(self,year):
 	"""输入年份,返回本年度属相
 
-	输出:animalSign"""
+        输出:animalSign"""
 
     def getHeavenlyAndEarthlyOfThisYear(self,year):
 	"""输入年份,返回本年年号(天干地支)
@@ -129,6 +137,7 @@ class LunarCalendar:
 
 	输出:dict: {'节气':(year, month, day)}
 	"""
+
     def getAllFestivalofThisMonth(self,year,month):
 	"""输入年份月份,返回本年度所有节日信息(dic)
 	
@@ -139,10 +148,21 @@ class LunarCalendar:
     def getLunarOfThisDay(self,year,month,day):
 	"""输入阳历年月日,返回本日阴历
 
-	输出:(year,month,day)
+	输出:(year,month,day, isleap)
 	"""
+        # 1. 到阳历起始时间的间隔天数
+        diff_days = date(year, month, day) - date(*solar1st)
+        diff_days = diff_days.days()
 
-    def getSolarTermOfThisDay(self,year,month,day):
+        # 2. year: 到阴历起始时间的间隔年数
+
+        # 3. 是阴历年内的第几天?
+
+        # 4. month, isleap: 是阴历年内的第几月？是否闰月
+
+        # 5. day, 月内的第几天?
+
+    def getSolarTermOfThisDay(self,year,month,day, isleap=False):
 	"""输入阴历年月日,返回本日阳历信息
 
 	输出:(year,month,day) 
