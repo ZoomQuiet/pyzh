@@ -1,5 +1,10 @@
 # -*- encoding: utf-8 -*-
 """ CalendarConversion   公历 <-> 阴历.
+
+Authors:
+
+- core algorithm is copy from ccal.py written by Changsen Xu(xucs007@yahoo.com)
+- First version is written by 潘俊勇(panjy at zopen.cn), 胡铃霞, and 王琳琳 during codefest2008.
 """
 from datetime import date, timedelta
 
