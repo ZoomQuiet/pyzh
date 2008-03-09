@@ -1,6 +1,14 @@
 # -*- encoding: utf-8 -*-
 """ CalendarConversion   公历 <-> 阴历.
 
+Refeneces:
+
+    1. "Zhong1guo2 yin1yang2 ri4yue4 dui4zhao4 wan4nian2li4"
+        by Lin2 Qi3yuan2. 《中国阴阳日月对照万年历》．林
+    2. "Ming4li3 ge2xin1 zi3ping2 cui4yan2" by Xu2 Le4wu2.
+        《命理革新子平粹言》．徐
+    3.  Da1zhong4 wan4nian2li4. 《大众万年历》
+
 Authors:
 
 - core algorithm is copy from ccal.py written by Changsen Xu(xucs007@yahoo.com)
@@ -60,6 +68,18 @@ class LunarCalendar:
         '小暑':(7,16), '大暑':(7,22), '立秋':(8,7), '处暑':(8,22), '白露':(9,7), 
         '秋分':(9,23), '寒露':(10,8), '霜降':(10,23), '立冬':(11,7), '小雪':(11,22), 
         '大雪':(12,7),'冬至':(12,22),'小寒':(1,5), '大寒':(1,20) } 
+
+#   encoding:
+#               b bbbbbbbbbbbb bbbb
+#      bit#     1 111111000000 0000
+#               6 543210987654 3210
+#               . ............ ....
+#      month#     000000000111
+#               M 123456789012   L
+#                               
+#   b_j = 1 for long month, b_j = 0 for short month
+#   L is the leap month of the year if 1<=L<=12; NO leap month if L = 0.
+#   The leap month (if exists) is long one if M = 1.
 
     yearCode = [
                                         0x04bd8,        # 1900
