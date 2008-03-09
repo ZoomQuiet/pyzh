@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 """ CalendarConversion   公历 <-> 阴历.
 """
-from datetime import date
+from datetime import date, timedelta
 
 def getSumIndexInfo(int_list, sum):
     """ int_list是一个整数的列表，sum是一个累加结果，找到列表以次累加，
@@ -46,8 +46,15 @@ class LunarCalendar:
 			   "十"]
     lunarHolidays    = {'春节':(1, 1), 
                        '端午':(5, 5), 
-                       '中秋':(8, 15), '重阳':(9,9),
-			   '元宵':(1, 15)}
+                       '中秋':(8, 15), 
+                       '重阳':(9,9),
+		       '元宵':(1, 15)}
+
+    solarTerms = {'立春':(2, 4), '雨水':(2, 18), '惊蛰':(3, 5), '春分':(3, 20), '清明':(4,4),
+        '谷雨':(4,20), '立夏':(5,5), '小满':(5,21), '芒种':(6,5), '夏至':(6,21), 
+        '小暑':(7,16), '大暑':(7,22), '立秋':(8,7), '处暑':(8,22), '白露':(9,7), 
+        '秋分':(9,23), '寒露':(10,8), '霜降':(10,23), '立冬':(11,7), '小雪':(11,22), 
+        '大雪':(12,7),'冬至':(12,22),'小寒':(1,5), '大寒':(1,20) } 
 
     yearCode = [
                                         0x04bd8,        # 1900
@@ -120,53 +127,68 @@ class LunarCalendar:
         monthDays, leapMonth = self.getLunarYearInfo()
         return leapMonth
 
-    def getAllSolarTermOfThisYear(self, year):
+    def listSolarTerms(self):
         """输入年份,返回本年度所有节气信息(dic)
 
-        输出:dict: {'节气':(year, month, day)}
+        输出: 节气名称的列表
+        XXX TODO: sort by date
         """
-        result = {}
-        for name, (month,  day) in self.lunarSolarTerms.items():
-            result[name] = self.getSolarTermOfThisDay(year, month, day)
-        return result
+        return self.solarTerms.keys()
 
     def getAllFestivalOfThisYear(self, year):
-        """ 输入年份,返回本年度所有节日信息(dic)
+        """ 输入年份,返回本年度所有节日信息(dict)
 
         如果闰月，就计算第一个月的节气
 
         输出:dict: {'节日':(year, month, day)}"""
         result = {}
         for name, (month,  day) in self.lunarHolidays.items():
-            result[name] = self.getSolarTermOfThisDay(year, month, day)
+            result[name] = self.getSolarDate(year, month, day)
         return result
 
-    def getDateOfThisSolarTerm(self, year, solarTerm):
-        """输入年份,节气,返回所在日期
+    def getDateByLunarHolidays(self, year, term):
+        """输入年份,节气或者节日,返回所在日期
 
-        输出:(year,month,day)"""
-        month,  day = self.lunarHolidays[solarTerm]
-        return self.getSolarTermOfThisDay(year, month, day)
+        输出:(year,month,day)
 
-    def getAnimalSignOfThisYear(self,year):
+        >>> cal = LunarCalendar()
+        >>> cal.getDateByLunarHolidays(2008, '春节')
+        (2008, 2, 7)
+        """
+        month,  day = self.lunarHolidays[term]
+        return self.getSolarDate(year, month, day)
+
+    def getDateByTerm(self, year, term):
+        """输入年份,节气, 返回所在日期
+
+        输出:(year,month,day)
+
+        >>> cal = LunarCalendar()
+        >>> cal.getDateByTerm(2008, '立春')
+        (2008, 2, 4)
+        """
+        month,  day = self.solarTerms[term]
+        return year, month, day
+
+    def getAnimalSign(self,year):
 	"""输入年份,返回本年度属相
 
         输出:animalSign
 
         >>> cal = LunarCalendar()
-        >>> print cal.getAnimalSignOfThisYear(2008)
+        >>> print cal.getAnimalSign(2008)
         鼠
         """
         diff_years = year - self.lunar_years[0]
         zhi_index = ( diff_years + self.lunar1st_zhi ) % 12
         return self.shengXiaoGB[zhi_index]
 
-    def getHeavenlyAndEarthlyOfThisYear(self,year):
+    def getGanZhi(self,year):
 	"""输入年份,返回本年年号(天干地支)
 
 	输出:heavenly, Earthly
         >>> cal = LunarCalendar()
-        >>> gan,zhi = cal.getHeavenlyAndEarthlyOfThisYear(2008)
+        >>> gan,zhi = cal.getGanZhi(2008)
         >>> print gan + zhi
         戊子
         """
@@ -175,15 +197,14 @@ class LunarCalendar:
         gan_index = ( diff_years + self.lunar1st_gan ) % 10
         return self.ganGB[gan_index], self.zhiGB[zhi_index]
 
-    def getYearOfThisHeavenlyAndEarthly(self, gan, zhi,starYear=0,endYear=0):
+    def getYearByGanZhi(self, gan, zhi,starYear=0,endYear=0):
 	"""输入天干地支,返回指定范围内的年份
 
 	输出:如果没有输入起始年份或截止年份的话,则返回最近的一个年份"""
-        
 
- #2.月份相关信息查询	
+    # 2. 月份相关信息查询	
 
-    def getDayCount(self,year,month, isleap=False):
+    def getLunarMonthDays(self,year,month, isleap=False):
 	""""输入年份月份,返回本月天数
 
 	输出:num"""
@@ -191,28 +212,30 @@ class LunarCalendar:
         index = month - 1 + (isleap and 1 or 0)
         return month_days[index]
 	
-    def getAllSolarTermsofThisMonth(self,year,month):
+    def listSolarTermsByMonth(self,year,month):
 	"""份月份,返回本月所有节气信息(dic)
 
 	输出:dict: {'节气':(year, month, day)}
 	"""
 
-    def getAllFestivalofThisMonth(self,year,month):
-	"""输入年份月份,返回本年度所有节日信息(dic)
+    def listLunarFestivalByMonth(self,year,month):
+	"""输入年份月份,返回本年度所有节日信息(dict)
 	
 	输出:dict: {'节日':(year, month, day)}"""
 
-  #3.详细日期信息查询
+    # 3.详细日期信息查询
 
-    def getLunarOfThisDay(self,year,month,day):
+    def getLunarDate(self,year,month,day):
 	"""输入阳历年月日,返回本日阴历
 
 	输出:(year,month,day, isleap)
 
         >>> cal = LunarCalendar()
-        >>> cal.getLunarOfThisDay(1975,1,3)
+        >>> cal.getLunarDate(1975,1,3)
         (1974, 11, 21, 0)
-        >>> cal.getLunarOfThisDay(1982,11,30)
+        >>> cal.getLunarDate(2008,2,7)
+        (2008, 1, 1, 0)
+        >>> cal.getLunarDate(1982,11,30)
         (1982, 10, 16, 0)
 	"""
         # 1. 到阳历起始时间的间隔天数
@@ -240,13 +263,38 @@ class LunarCalendar:
         day = month_offset 
         return year, month ,day , isleap
 
-    def getSolarTermOfThisDay(self,year,month,day, isleap=False):
+    def getSolarDate(self,year,month,day, isleap=False):
 	"""输入阴历年月日,返回本日阳历信息
 
 	输出:(year,month,day) 
-	"""	
+
+        >>> cal = LunarCalendar()
+        >>> cal.getSolarDate(1974,11,21)
+        (1975, 1, 3)
+        >>> cal.getSolarDate(1986,7,22)
+        (1986, 8, 27)
+        >>> cal.getSolarDate(1987,6,11)
+        (1987, 7, 6)
+        >>> cal.getSolarDate(1982, 10, 16)
+        (1982, 11, 30)
+        >>> cal.getSolarDate(2008, 1, 1)
+        (2008, 2, 7)
+	"""
+        # 1. 到起始时间的间隔天数
+        diff_days = 0
+        for i in range(year - self.lunar_years[0]):
+            diff_days += self.lunar_year_days[i]
+
+        monthDays, leapMonth = self.getLunarYearInfo(year)
+        monthIndex = month + ( leapMonth and month > leapMonth and 1 or 0) + (isleap and 1 or 0)
+
+        diff_days += sum( monthDays[:monthIndex-1] ) + day
+
+        solar_date = date(*self.solar1st) + timedelta(diff_days)
+        return solar_date.year, solar_date.month, solar_date.day
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-
+    #cal = LunarCalendar()
+    #print cal.getSolarDate(1974,11,21)
