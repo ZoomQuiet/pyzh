@@ -304,6 +304,8 @@ class LunarCalendar:
         (1982, 11, 30)
         >>> cal.getSolarDate(2008, 1, 1)
         (2008, 2, 7)
+        >>> cal.getSolarDate(2009, 1, 1)
+        (2009, 1, 26)
 	"""
         # 1. 到起始时间的间隔天数
         diff_days = 0
@@ -321,5 +323,3 @@ class LunarCalendar:
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    #cal = LunarCalendar()
-    #print cal.getSolarDate(1974,11,21)
