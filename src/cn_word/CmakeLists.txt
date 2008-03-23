@@ -1,0 +1,29 @@
+PROJECT (ZCUT)
+
+SET(BOOST_PATH D:/dev/c++/boost)
+SET(PYTHON_PATH D:/dev/evn/python)
+
+INCLUDE_DIRECTORIES(
+	${BOOST_PATH}
+	${PYTHON_PATH}/include
+)
+
+#注意,要放在可执行文件之前
+LINK_DIRECTORIES(
+	${PYTHON_PATH}/libs
+	${BOOST_PATH}/bin.v2/libs/python/build/gcc-mingw-4.2.1/release
+)
+
+#动态链接库输出目录
+SET(LIBRARY_OUTPUT_PATH ../cn_word)
+
+#定义宏,多个用空格隔开
+#ADD_DEFINITIONS(-DNDEBUG)
+
+AUX_SOURCE_DIRECTORY(src SRC_DIR)
+ADD_LIBRARY(cn_word SHARED ${SRC_DIR})
+
+TARGET_LINK_LIBRARIES(cn_word
+python25
+boost_python-mgw42-1_34_1
+)
