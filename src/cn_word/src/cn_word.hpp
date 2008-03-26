@@ -72,10 +72,13 @@ public:
         tok=Token();
         CnChar first_char,c;
         CharType char_type_first=utf8_next(next,end,first_char);
-        if(char_type_first){
+		if(char_type_first){
             tok+=first_char;
+			if (char_type_first==ascii&&is_stop_word(*first_char.begin()))
+			{
+				return true;
+			}
             InputIterator break_point=next;
-            
             CharType char_type_second=utf8_next(next,end,c);
             switch(char_type_second){
                 case undefined:return true;
@@ -106,7 +109,7 @@ public:
                         //std::cout<<"\ns = "<<s<<"\n";
 						typename String::size_type s_len=s.length();
                         if(s_len<=len){
-							std::cout<<"\ns_len="<<s_len<<"\n";
+							//std::cout<<"\ns_len="<<s_len<<"\n";
                             while(s_len--){
                                 if(s[s_len]!=*(next+s_len))goto next;
                             }

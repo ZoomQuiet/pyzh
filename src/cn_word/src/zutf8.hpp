@@ -22,15 +22,38 @@ private:
 };
 enum CharType{undefined=0,ascii,cn};
 
+bool is_stop_word(char c){
+	switch(c){
+			case ' ':
+			case ',':
+			case '.':
+			case '(':
+			case ')':
+			case '\t':
+			case '[':
+			case ']':
+			case '?':
+			case '!':
+			case '\'':
+			case '{':
+			case '}':
+				return true;
+			default:
+				return false;
+	}
+}
+
 template<class Iter,class String>
 void english_word(Iter& next,Iter end,String& str){
     unsigned char c;
     while(next!=end){
         c=static_cast<unsigned char>(*next);
-        if(c<0x7F && c!=' '){
-            str+=c;
-        }else break;
-        ++next;
+        if(c>=0x7F||is_stop_word(c)){
+			break;
+        }else{
+			str+=c;
+			++next;		
+		}
     }
 }
 template<class Iter,class String>
