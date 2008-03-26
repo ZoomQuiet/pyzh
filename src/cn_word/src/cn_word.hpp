@@ -74,7 +74,7 @@ public:
         CharType char_type_first=utf8_next(next,end,first_char);
 		if(char_type_first){
             tok+=first_char;
-			if (char_type_first==ascii&&is_stop_word(*first_char.begin()))
+			if (char_type_first==ascii&&is_stop_word(first_char[0]))
 			{
 				return true;
 			}
@@ -83,6 +83,10 @@ public:
             switch(char_type_second){
                 case undefined:return true;
                 case ascii:
+                	if(is_stop_word(c[0])){
+                		next=break_point;
+                		return true;
+                	}
                     if(char_type_first==ascii){
                         tok+=c;
                         english_word(next,end,tok);

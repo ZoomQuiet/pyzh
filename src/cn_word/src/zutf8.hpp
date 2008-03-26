@@ -35,8 +35,11 @@ bool is_stop_word(char c){
 			case '?':
 			case '!':
 			case '\'':
+			case '"':
 			case '{':
 			case '}':
+			case ':':
+			case ';':
 				return true;
 			default:
 				return false;
