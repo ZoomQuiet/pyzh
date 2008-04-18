@@ -46,6 +46,11 @@ def wraptext(text, width=75, encoding='utf-8', cr=None, indent='', firstindent=N
         unicode_flag = False
         text = unicode(text, encoding)
         
+    if text[-1] in ('\r', '\n'):
+        enter_flag = True
+    else:
+        enter_flag = False
+        
     if not cr:
         if text.find('\r\n') > -1:
             cr = '\r\n'
@@ -53,11 +58,13 @@ def wraptext(text, width=75, encoding='utf-8', cr=None, indent='', firstindent=N
             cr = '\r'
         else:
             cr = '\n'
-    
+            
+    text = text.replace('\r\n', '\n')
+    text = re.sub(r'\s+$', '\n', text)
     if skipchar:
         text = re.sub(r'(?m)^%s' % skipchar, '', text)
         
-    lines = re.split(r'\r\n|\r|\n(:\s*\r\n|\s*\r|\s*\n)+', text)
+    lines = re.split(r'(\n\s*\n+|\r\r+)', text)
     rx = re.compile(u"[\u2e80-\uffff]+", re.UNICODE)
     
     if isinstance(indent, int):
@@ -141,16 +148,18 @@ def wraptext(text, width=75, encoding='utf-8', cr=None, indent='', firstindent=N
                 
         if buf:
             t.append(step + ' '.join(buf))
-        return '\n'.join(t)
+        return cr.join(t)
     
     s = []
     for line in lines:
         if not line.strip():
-            s.append('')
+            s.append(indent)
         else:
             s.append(_wrap(line, width, indent, firstindent))
        
-    text = '\n'.join(s)
+    if enter_flag:
+        s.append('')
+    text = cr.join(s)
     if not unicode_flag:
         text = text.encode(encoding)
     return text
@@ -169,8 +178,8 @@ Hey!
 
 #I  would like to know wheter you are aware of using the google accounts
 #for your app or not, and how you think about alternatives ?
-#
-#
+#  
+#  
 #http:/asdfl.asf.asdf.asf.asfadsfds.fads.fads.fasdf.asdf.sdf.asf.asdf.sdf.asdf.adsfa.dsf
 #
 #
@@ -179,7 +188,7 @@ external developer - mainly beeing frightenend of that the external
 developer is leading me on a "wrong" login-site an thiefing my data or
 just that he is able to find out about my gmail-data..
 """
-    print wraptext(msg, 60, indent='#  ', skipchar='#').encode('gbk')
+    print wraptext(msg, 60, indent='    ', skipchar='#').encode('gbk')
 
 if __name__ == '__main__':
 #    from timeit import Timer
