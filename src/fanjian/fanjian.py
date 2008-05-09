@@ -1227,3 +1227,17 @@ def FtoJ(data):
         data=data.replace(zh_dict[s],s)
     return data
 
+if __name__ == "__main__":
+    help = """usage:
+
+       python fanjian [cn|tw] [filename]
+    """
+    import sys
+    if len(sys.argv) >= 2:
+        fd = open(sys.argv[2], 'r')
+        if sys.argv[1] == "tw":
+            print JtoF(fd.read())
+        if sys.argv[1] == "cn":
+            print FtoJ(fd.read())
+    else:
+        print help
