@@ -7,3 +7,5 @@ word
 datetime
  - lunarcalendar
 """
+import word
+import datetime

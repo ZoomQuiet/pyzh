@@ -35,7 +35,7 @@ setup(
     packages=find_packages(exclude=["ez_setup", 'examples']),
     entry_points = """
     #[console_scripts]
-    #f2j = zhpy.commandline:commandline
+    #f2j = zhutils.word.pyjft:f2j
     #j2f
     """,
     classifiers = [
