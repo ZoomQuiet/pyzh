@@ -61,7 +61,7 @@ class LunarCalendar:
                        '端午':(5, 5), 
                        '中秋':(8, 15), 
                        '重阳':(9,9),
-		       '元宵':(1, 15)}
+		               '元宵':(1, 15)}
 
     solarTerms = {'立春':(2, 4), '雨水':(2, 18), '惊蛰':(3, 5), '春分':(3, 20), '清明':(4,4),
         '谷雨':(4,20), '立夏':(5,5), '小满':(5,21), '芒种':(6,5), '夏至':(6,21), 
@@ -80,6 +80,8 @@ class LunarCalendar:
 #   b_j = 1 for long month, b_j = 0 for short month
 #   L is the leap month of the year if 1<=L<=12; NO leap month if L = 0.
 #   The leap month (if exists) is long one if M = 1.
+    MINYEAR = 1900
+    MAXYEAR = 2050
 
     yearCode = [
                                         0x04bd8,        # 1900
@@ -113,9 +115,9 @@ class LunarCalendar:
     0x0aa50, 0x1b255, 0x06d20, 0x0ada0                  # 2049
     ]
 
-    lunar_years = range(1900, 1900 + len(yearCode))
-    solar1st = (1900, 1, 30)   # January 31, 1900 
-    lunar1st = (1900, 1, 1) # First day, First month, 1900, 庚/子年
+    lunar_years = range(MINYEAR, MINYEAR + len(yearCode))
+    solar1st = (MINYEAR, 1, 30)   # January 31, 1900 
+    lunar1st = (MINYEAR, 1, 1) # First day, First month, 1900, 庚/子年
     lunar1st_gan = 6
     lunar1st_zhi = 0
 
