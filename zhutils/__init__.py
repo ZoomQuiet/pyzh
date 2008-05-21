@@ -4,8 +4,8 @@ word
  - translate
  - split
 
-datetime
+lunar
  - lunarcalendar
 """
 import word
-import datetime
+import lunar
