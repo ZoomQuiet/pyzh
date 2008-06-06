@@ -119,6 +119,7 @@ def wraptext(text, width=75, encoding='utf-8', cr=None, indent='', firstindent=N
                 w = width - len(indent)
                 step = indent
             length = y + len(i)*factor + len(buf)
+#            print 'length', length, s[0].encode('gbk')
             if length == w:
                 buf.append(i)
                 t.append(step + ' '.join(buf))
@@ -127,10 +128,13 @@ def wraptext(text, width=75, encoding='utf-8', cr=None, indent='', firstindent=N
                 y = 0
             elif length > w:
                 if factor == 2 or (factor==1 and len(i) * factor >= w):
-                    buf.append(i[:(w-y-len(buf)-1)/factor])
+                    buf_len = len(buf)
+                    rest = w-y-buf_len
+                    buf.append(i[:rest/factor])
+#                    print '----', w, y, buf_len, (w-y-buf_len-1), buf
                     t.append(step + ' '.join(buf))
                     x = 1
-                    s.insert(0, i[(w-y-len(buf)-1)/2:])
+                    s.insert(0, i[rest/factor:])
                     buf = []
                     y = 0
                     continue
@@ -165,30 +169,8 @@ def wraptext(text, width=75, encoding='utf-8', cr=None, indent='', firstindent=N
     return text
         
 def test():
-    msg =u"""   我们自  己可以的，不是吗? whay 我们正的
- 要求是什么、how to dothat? no problem? !! 但是中文就不同了，一个汉字的空间占用等于2个英文。汉字的分词，是没有空格的。
-
- 借鉴CJKSplitter的开发经验，我准备也做一个中文折行算法（应该也很容易支持日韩文字），当然不可能有英文的那么高效了：
- 英文是ascii，每个字符占用空间相同，直接使用空格就可以分词。因此英文版本的折行算法在python cookbook上有很经典的高效算法：
-
- one-liner word-wrap function
-
-Hey!
-
-
-#I  would like to know wheter you are aware of using the google accounts
-#for your app or not, and how you think about alternatives ?
-#  
-#  
-#http:/asdfl.asf.asdf.asf.asfadsfds.fads.fads.fasdf.asdf.sdf.asf.asdf.sdf.asdf.adsfa.dsf
-#
-#
-#I'm not sure wheter I Would use my Googleaccount for an app of an
-external developer - mainly beeing frightenend of that the external
-developer is leading me on a "wrong" login-site an thiefing my data or
-just that he is able to find out about my gmail-data..
-"""
-    print wraptext(msg, 60, indent='    ', skipchar='#').encode('gbk')
+    msg =u"""首先这个框架是一个试验品，或者说是主要是个人使用，因此我将有完全的控制权，这一点很重要。我可以用它学到许多框架的知识。以前只是使用，学习，象学过：cherrypy, Karrigell, snakelets等，不过没有做过什么开发；zope则是我学得最早了，不过也早就放弃了；django投入的精力最多，也开发了不少东西；再后来就是 web2py了，不过重用搞得我很不爽，而且有些想法不被认同。但这些更多的还是集中在开发方面，对于框架本身了解有限，这次造轮是一个好机会。"""
+    print wraptext(msg, 75, indent='', skipchar='#').encode('gbk')
 
 if __name__ == '__main__':
 #    from timeit import Timer
