@@ -90,4 +90,5 @@ if __name__=="__main__":
     print utf8_cn_conut("电子科大Uestc")
     print utf8_en_conut("电子科大Uestc")
     print utf8_cut("张沈鹏123456",5)
+    print utf8_cut("张沈鹏123456",10)
     
