@@ -1,31 +1,31 @@
 #coding:utf8
 #author:ne.manman@gmail.com
-#说明：
-#    简繁体互换包
-#    简体=>繁体 JtoF(str)
-#    繁体=>简体 FtoJ(str)
 #    传入的字符串(str)默认为utf8编码
 #    已去掉了简繁体相同的字，减少字典大小
 #update:2008.11 by 张沈鹏 zsp007@gmail.com / zuroc@douban.com
 #添加遗漏的汉字，改进算法性能，当然还要感谢伟大Davies前辈。
 
+"""
+繁简体转换包
+"""
+
 def _zh_convert(data,encode,conv_dict):
-    is_unicode = False
     if isinstance(data, unicode):
         is_unicode = True
     else:
+        is_unicode = False
         data = data.decode("utf-8")
     result = u''.join(conv_dict.get(c,c) for c in data)
     if not is_unicode:
-        result=result.encode(encode)
+        result = result.encode(encode)
     return result
 
 def zh_simple(data,encode="utf-8"):
-    #繁体到简体
+    """繁体到简体"""
     return _zh_convert(data,encode,_u_trad2simp)
 
 def zh_traditional(data,encode="utf-8"):
-    #简体到繁体
+    """简体到繁体"""
     return _zh_convert(data,encode,_u_simp2trad)
 
 if __name__ == "__main__":
