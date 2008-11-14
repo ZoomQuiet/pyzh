@@ -26,7 +26,7 @@ def zh_simple(data,encode="utf-8"):
 
 def zh_traditional(data,encode="utf-8"):
     #简体到繁体
-    return _zh_convert(data,encode,_simp2trad)
+    return _zh_convert(data,encode,_u_simp2trad)
 
 if __name__ == "__main__":
     help = """usage:
