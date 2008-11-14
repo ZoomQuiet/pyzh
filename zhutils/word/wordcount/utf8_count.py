@@ -53,8 +53,41 @@ def utf8_en_conut(word):
     return utf8_count(word)[0]
 
 
+def utf8_cut(word,limit,etc="..."):
+    """一个中文当2个E文"""
+    cn=0
+    en=0
+    i=0
+    length=len(word)
+    if length<=limit:return word
+    limit = limit<<1
+    width=0
+    while i<length:
+        c=word[i]
+        if c>"\xE0" and c<="\xEF":
+            offset=3
+            width+=2
+        else:
+            if c<"\xC0":
+            	offset=1
+            	width+=1
+            else:
+                width+=2
+                if c<="\xDF":offset=2
+                elif c<="\xF7":offset=4
+                elif c<="\xFB":offset=5
+                else:offset=6
+        if width>limit:
+            return word[:i]+etc
+        else:
+            i+=offset
+    return word
+
+
 if __name__=="__main__":
     print utf8_count("作者:张沈鹏")
     print utf8_count("Email:zsp007@gmail.com")
     print utf8_cn_conut("电子科大Uestc")
     print utf8_en_conut("电子科大Uestc")
+    print utf8_cut("张沈鹏123456",5)
+    
