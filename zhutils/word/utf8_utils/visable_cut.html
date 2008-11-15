@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+.char_width_wrapper{margin:.5em 1em;float:left;clear:left;}
+.char_width{font-size:12px;background:#f2f2f2;font-family:Arial,Helvetica,sans-serif;}
+</style>
+<script src="jquery_src.js"></script>
+<script>
+$(function(){
+var buf=[],base_width,python=[];
+	$(".char_width").each(function(i){
+		var rev_width,width=this.offsetWidth;
+		$(this.parentNode).append("<div>"+width+"px</div>")
+		if(buf.length){
+			rev_width=width*48/base_width;
+			i="unichr("+(i-1)+") =>";
+			python.push(rev_width)
+		}
+		else{
+			i="测试基准中文字符长度"
+			rev_width=48;
+			base_width=width;
+		}
+		buf.push(i+" "+$(this).text().substring(0,1)+" : "+rev_width)
+	})
+$("#result").html(buf.join("<br/>"))
+$("#python").html("_visable_width="+python.join(", "))
+})
+</script>
+</head><body>
+<div>python对ascii用ord(i)</div>
+<p id="python"></p>
+<p id="result"></p>
+<div class="char_width_wrapper"><div class="char_width">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div></div>
+<div class="char_width_wrapper"><div class="char_width">                              </div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width">																														</div></div>
+<div class="char_width_wrapper"><div class="char_width">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+<div class="char_width_wrapper"><div class="char_width">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div>
+<div class="char_width_wrapper"><div class="char_width">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</div></div>
+<div class="char_width_wrapper"><div class="char_width">""""""""""""""""""""""""""""""</div></div>
+<div class="char_width_wrapper"><div class="char_width">##############################</div></div>
+<div class="char_width_wrapper"><div class="char_width">$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$</div></div>
+<div class="char_width_wrapper"><div class="char_width">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</div></div>
+<div class="char_width_wrapper"><div class="char_width">&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</div></div>
+<div class="char_width_wrapper"><div class="char_width">''''''''''''''''''''''''''''''</div></div>
+<div class="char_width_wrapper"><div class="char_width">((((((((((((((((((((((((((((((</div></div>
+<div class="char_width_wrapper"><div class="char_width">))))))))))))))))))))))))))))))</div></div>
+<div class="char_width_wrapper"><div class="char_width">******************************</div></div>
+<div class="char_width_wrapper"><div class="char_width">++++++++++++++++++++++++++++++</div></div>
+<div class="char_width_wrapper"><div class="char_width">,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,</div></div>
+<div class="char_width_wrapper"><div class="char_width">------------------------------</div></div>
+<div class="char_width_wrapper"><div class="char_width">..............................</div></div>
+<div class="char_width_wrapper"><div class="char_width">//////////////////////////////</div></div>
+<div class="char_width_wrapper"><div class="char_width">000000000000000000000000000000</div></div>
+<div class="char_width_wrapper"><div class="char_width">111111111111111111111111111111</div></div>
+<div class="char_width_wrapper"><div class="char_width">222222222222222222222222222222</div></div>
+<div class="char_width_wrapper"><div class="char_width">333333333333333333333333333333</div></div>
+<div class="char_width_wrapper"><div class="char_width">444444444444444444444444444444</div></div>
+<div class="char_width_wrapper"><div class="char_width">555555555555555555555555555555</div></div>
+<div class="char_width_wrapper"><div class="char_width">666666666666666666666666666666</div></div>
+<div class="char_width_wrapper"><div class="char_width">777777777777777777777777777777</div></div>
+<div class="char_width_wrapper"><div class="char_width">888888888888888888888888888888</div></div>
+<div class="char_width_wrapper"><div class="char_width">999999999999999999999999999999</div></div>
+<div class="char_width_wrapper"><div class="char_width">::::::::::::::::::::::::::::::</div></div>
+<div class="char_width_wrapper"><div class="char_width">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</div></div>
+<div class="char_width_wrapper"><div class="char_width">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div></div>
+<div class="char_width_wrapper"><div class="char_width">==============================</div></div>
+<div class="char_width_wrapper"><div class="char_width">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</div></div>
+<div class="char_width_wrapper"><div class="char_width">??????????????????????????????</div></div>
+<div class="char_width_wrapper"><div class="char_width">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</div></div>
+<div class="char_width_wrapper"><div class="char_width">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div></div>
+<div class="char_width_wrapper"><div class="char_width">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</div></div>
+<div class="char_width_wrapper"><div class="char_width">CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC</div></div>
+<div class="char_width_wrapper"><div class="char_width">DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD</div></div>
+<div class="char_width_wrapper"><div class="char_width">EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE</div></div>
+<div class="char_width_wrapper"><div class="char_width">FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</div></div>
+<div class="char_width_wrapper"><div class="char_width">GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG</div></div>
+<div class="char_width_wrapper"><div class="char_width">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</div></div>
+<div class="char_width_wrapper"><div class="char_width">IIIIIIIIIIIIIIIIIIIIIIIIIIIIII</div></div>
+<div class="char_width_wrapper"><div class="char_width">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ</div></div>
+<div class="char_width_wrapper"><div class="char_width">KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK</div></div>
+<div class="char_width_wrapper"><div class="char_width">LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL</div></div>
+<div class="char_width_wrapper"><div class="char_width">MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM</div></div>
+<div class="char_width_wrapper"><div class="char_width">NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</div></div>
+<div class="char_width_wrapper"><div class="char_width">OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</div></div>
+<div class="char_width_wrapper"><div class="char_width">PPPPPPPPPPPPPPPPPPPPPPPPPPPPPP</div></div>
+<div class="char_width_wrapper"><div class="char_width">QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ</div></div>
+<div class="char_width_wrapper"><div class="char_width">RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</div></div>
+<div class="char_width_wrapper"><div class="char_width">SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</div></div>
+<div class="char_width_wrapper"><div class="char_width">TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</div></div>
+<div class="char_width_wrapper"><div class="char_width">UUUUUUUUUUUUUUUUUUUUUUUUUUUUUU</div></div>
+<div class="char_width_wrapper"><div class="char_width">VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV</div></div>
+<div class="char_width_wrapper"><div class="char_width">WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW</div></div>
+<div class="char_width_wrapper"><div class="char_width">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div></div>
+<div class="char_width_wrapper"><div class="char_width">YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY</div></div>
+<div class="char_width_wrapper"><div class="char_width">ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</div></div>
+<div class="char_width_wrapper"><div class="char_width">[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[</div></div>
+<div class="char_width_wrapper"><div class="char_width">\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\</div></div>
+<div class="char_width_wrapper"><div class="char_width">]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]</div></div>
+<div class="char_width_wrapper"><div class="char_width">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</div></div>
+<div class="char_width_wrapper"><div class="char_width">______________________________</div></div>
+<div class="char_width_wrapper"><div class="char_width">``````````````````````````````</div></div>
+<div class="char_width_wrapper"><div class="char_width">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div></div>
+<div class="char_width_wrapper"><div class="char_width">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</div></div>
+<div class="char_width_wrapper"><div class="char_width">cccccccccccccccccccccccccccccc</div></div>
+<div class="char_width_wrapper"><div class="char_width">dddddddddddddddddddddddddddddd</div></div>
+<div class="char_width_wrapper"><div class="char_width">eeeeeeeeeeeeeeeeeeeeeeeeeeeeee</div></div>
+<div class="char_width_wrapper"><div class="char_width">ffffffffffffffffffffffffffffff</div></div>
+<div class="char_width_wrapper"><div class="char_width">gggggggggggggggggggggggggggggg</div></div>
+<div class="char_width_wrapper"><div class="char_width">hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</div></div>
+<div class="char_width_wrapper"><div class="char_width">iiiiiiiiiiiiiiiiiiiiiiiiiiiiii</div></div>
+<div class="char_width_wrapper"><div class="char_width">jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</div></div>
+<div class="char_width_wrapper"><div class="char_width">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</div></div>
+<div class="char_width_wrapper"><div class="char_width">llllllllllllllllllllllllllllll</div></div>
+<div class="char_width_wrapper"><div class="char_width">mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</div></div>
+<div class="char_width_wrapper"><div class="char_width">nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn</div></div>
+<div class="char_width_wrapper"><div class="char_width">oooooooooooooooooooooooooooooo</div></div>
+<div class="char_width_wrapper"><div class="char_width">pppppppppppppppppppppppppppppp</div></div>
+<div class="char_width_wrapper"><div class="char_width">qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</div></div>
+<div class="char_width_wrapper"><div class="char_width">rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</div></div>
+<div class="char_width_wrapper"><div class="char_width">ssssssssssssssssssssssssssssss</div></div>
+<div class="char_width_wrapper"><div class="char_width">tttttttttttttttttttttttttttttt</div></div>
+<div class="char_width_wrapper"><div class="char_width">uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu</div></div>
+<div class="char_width_wrapper"><div class="char_width">vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv</div></div>
+<div class="char_width_wrapper"><div class="char_width">wwwwwwwwwwwwwwwwwwwwwwwwwwwwww</div></div>
+<div class="char_width_wrapper"><div class="char_width">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div></div>
+<div class="char_width_wrapper"><div class="char_width">yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</div></div>
+<div class="char_width_wrapper"><div class="char_width">zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</div></div>
+<div class="char_width_wrapper"><div class="char_width">{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{</div></div>
+<div class="char_width_wrapper"><div class="char_width">||||||||||||||||||||||||||||||</div></div>
+<div class="char_width_wrapper"><div class="char_width">}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}</div></div>
+<div class="char_width_wrapper"><div class="char_width">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div></div>
+<div class="char_width_wrapper"><div class="char_width"></div></div>
+
+</body></html>
