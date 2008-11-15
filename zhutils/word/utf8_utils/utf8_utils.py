@@ -105,7 +105,6 @@ def visable_length(word):
     return width
     
 def visable_cut(word,limit,etc="..."):
-    """一个中文当2个E文"""
     i=0
     length=len(word)
     if length<=limit:return word
