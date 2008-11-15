@@ -52,28 +52,24 @@ def utf8_cn_conut(word):
 def utf8_en_conut(word):
     return utf8_count(word)[0]
 
-_visable_width=0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 4, 7, 7, 11, 8, 2, 4, 4, 5, 7, 3, 4, 3, 3, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 3, 3, 7, 7, 7, 7, 12, 7, 8, 9, 9, 8, 7, 9, 9, 3, 6, 8, 7, 9, 9, 9, 8, 9, 9, 8, 7, 9, 7, 11, 7, 7, 7, 3, 3, 3, 5, 7, 4, 7, 7, 6, 7, 7, 3, 7, 7, 3, 3, 6, 3, 11, 7, 7, 7, 7, 4, 7, 3, 7, 5, 9, 5, 5, 5, 4, 3, 4, 7
-
 def utf8_cut(word,limit,etc="..."):
     """一个中文当2个E文"""
-    cn=0
-    en=0
     i=0
     length=len(word)
     if length<=limit:return word
-    limit = limit<<2
+    limit = limit<<1
     width=0
     while i<length:
         c=word[i]
         if c>"\xE0" and c<="\xEF":
             offset=3
-            width+=4
+            width+=2
         else:
             if c<"\xC0":
             	offset=1
-            	width+=ord
+            	width+=1
             else:
-                width+=4
+                width+=2
                 if c<="\xDF":offset=2
                 elif c<="\xF7":offset=4
                 elif c<="\xFB":offset=5
@@ -84,12 +80,67 @@ def utf8_cut(word,limit,etc="..."):
             i+=offset
     return word
 
+_visable_width=0, 24, 24, 24, 24, 24, 24, 24, 24, 0, 0, 0, 0, 0, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 12, 12, 16, 28, 28, 44, 32, 8, 16, 16, 20, 28, 12, 16, 12, 12, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 12, 12, 28, 28, 28, 28, 48, 28, 32, 36, 36, 32, 28, 36, 36, 12, 24, 32, 28, 36, 36, 36, 32, 36, 36, 32, 28, 36, 28, 44, 28, 28, 28, 12, 12, 12, 20, 28, 16, 28, 28, 24, 28, 28, 12, 28, 28, 12, 12, 24, 12, 44, 28, 28, 28, 28, 16, 28, 12, 28, 20, 36, 20, 20, 20, 16, 12, 16, 28, 24
+#中文长48
+
+def visable_length(word):
+    length=len(word)
+    width=0
+    i=0
+    while i<length:
+        c=word[i]
+        if c>"\xE0" and c<="\xEF":
+            i+=3
+            width+=48
+        else:
+            if c<"\xC0":
+                i+=1
+                width+=_visable_width[ord(c)]
+            else:
+                width+=48
+                if c<="\xDF":i+=2
+                elif c<="\xF7":i+=4
+                elif c<="\xFB":i+=5
+                else:i+=6
+    return width
+    
+def visable_cut(word,limit,etc="..."):
+    """一个中文当2个E文"""
+    i=0
+    length=len(word)
+    if length<=limit:return word
+    limit = limit*48
+    width = 0
+    while i<length:
+        c=word[i]
+        if c>"\xE0" and c<="\xEF":
+            offset=3
+            width+=48
+        else:
+            if c<"\xC0":
+            	offset=1
+            	width+=_visable_width[ord(c)]
+            else:
+                width+=48
+                if c<="\xDF":offset=2
+                elif c<="\xF7":offset=4
+                elif c<="\xFB":offset=5
+                else:offset=6
+        if width>limit:
+            etc_length=(48+visable_length(etc))/48
+            return word[:i-etc_length]+etc
+        else:
+            i+=offset
+    return word
+
+
 
 if __name__=="__main__":
     print utf8_count("作者:张沈鹏")
     print utf8_count("Email:zsp007@gmail.com")
     print utf8_cn_conut("电子科大Uestc")
     print utf8_en_conut("电子科大Uestc")
-    print utf8_cut("张沈鹏123456",5)
-    print utf8_cut("张沈鹏123456",10)
-    
+    print utf8_cut("张沈鹏123456",5).decode("utf-8")
+    print utf8_cut("张沈鹏123456",10).decode("utf-8")
+    print visable_cut("张沈鹏@@@",5).decode("utf-8")
+    print visable_cut("张沈鹏lll",5).decode("utf-8")
